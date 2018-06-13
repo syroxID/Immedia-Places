@@ -12,25 +12,25 @@ import FoursquareAPIClient
 import SwiftyJSON
 
 class MapController: UIViewController {
+    
+    //MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     
-    var venues = [Venue]()
-    
+    //Foursquare Credentials
     let client = FoursquareAPIClient(clientId: "5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR", clientSecret: "LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4")
+    
+    //MARK: - Properties
+    private let appTitle = "What's around me?"
+    var venues = [Venue]()
+    var selectedVenueIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = appTitle
         
         checkLocationServiceAuthentication()
         
-//        let initialLocation = CLLocation(latitude: 37.7749, longitude: -122.431297)
-//
-//        zoomMapTo(location: initialLocation)
-        
         mapView.delegate = self
-        
-//        getVenues(aroundLocation: initialLocation)
-        
     }
     
     private let regionRadius: CLLocationDistance = 1000
@@ -103,6 +103,7 @@ extension MapController: CLLocationManagerDelegate {
 }
 
 extension MapController: MKMapViewDelegate {
+    //Would like to add image to the pin
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? Venue {
             let identifier = "pin"
@@ -110,11 +111,13 @@ extension MapController: MKMapViewDelegate {
             
             if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
                 view = dequeuedView
+//                view.image = UIImage(named: "chat")
             } else {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
                 view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
+//                view.image = UIImage(named: "chat")
             }
             view.animatesDrop = true
             return view
@@ -123,9 +126,38 @@ extension MapController: MKMapViewDelegate {
         return nil
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("Selected: \(view.annotation?.title)")
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation else { fatalError() }
+        navigationItem.title = annotation.title!
     }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        navigationItem.title = appTitle
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+
+//        venues.filter {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)}
+        
+        selectedVenueIndex = venues.index(where: {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)})
+        
+            performSegue(withIdentifier: "goToVenueDetail", sender: self)
+        
+        
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToVenueDetail" {
+            let destinationVC = segue.destination as! VenueViewController
+            if let index = selectedVenueIndex {
+                destinationVC.venue = venues[index]
+            } else {
+                fatalError("Venue could not be found")
+            }
+        }
+    }
+    
 }
 
 

@@ -13,11 +13,13 @@ class Venue: NSObject, MKAnnotation {
     var title: String?
     var locationName: String?
     var coordinate: CLLocationCoordinate2D
+    var venueID: String?
     
-    init(title: String, locationName: String?, coordinate: CLLocationCoordinate2D) {
+    init(title: String, locationName: String?, coordinate: CLLocationCoordinate2D, venueID: String?) {
         self.title = title
         self.locationName = locationName
         self.coordinate = coordinate
+        self.venueID = venueID
         
         super.init()
     }
@@ -37,10 +39,11 @@ class Venue: NSObject, MKAnnotation {
         let locationName = json["location"]["address"].string
         let lat = json["location"]["lat"].doubleValue
         let long = json["location"]["lng"].doubleValue
+        let venueID = json["id"].string
         
         let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
-        return Venue(title: title, locationName: locationName, coordinate: coordinate)
+        return Venue(title: title, locationName: locationName, coordinate: coordinate, venueID: venueID)
     }
 }
 
