@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		11257C3620D0FB1100E8FA50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C3520D0FB1100E8FA50 /* AppDelegate.swift */; };
-		11257C3820D0FB1100E8FA50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C3720D0FB1100E8FA50 /* ViewController.swift */; };
+		11257C3820D0FB1100E8FA50 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C3720D0FB1100E8FA50 /* MapController.swift */; };
 		11257C3B20D0FB1100E8FA50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11257C3920D0FB1100E8FA50 /* Main.storyboard */; };
 		11257C3D20D0FB1300E8FA50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11257C3C20D0FB1300E8FA50 /* Assets.xcassets */; };
 		11257C4020D0FB1300E8FA50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11257C3E20D0FB1300E8FA50 /* LaunchScreen.storyboard */; };
+		C6664797C25781F55AB9955A /* Pods_Immedia_Places.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		11257C3220D0FB1100E8FA50 /* Immedia Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Immedia Places.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		11257C3520D0FB1100E8FA50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		11257C3720D0FB1100E8FA50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		11257C3720D0FB1100E8FA50 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		11257C3A20D0FB1100E8FA50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11257C3C20D0FB1300E8FA50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11257C3F20D0FB1300E8FA50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11257C4120D0FB1300E8FA50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		760069EC4C84AD2AB820D92F /* Pods-Immedia Places.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Immedia Places.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places.debug.xcconfig"; sourceTree = "<group>"; };
+		B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Immedia_Places.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD2654A058FA26DC4C1D88C1 /* Pods-Immedia Places.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Immedia Places.release.xcconfig"; path = "Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6664797C25781F55AB9955A /* Pods_Immedia_Places.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +45,8 @@
 			children = (
 				11257C3420D0FB1100E8FA50 /* Immedia Places */,
 				11257C3320D0FB1100E8FA50 /* Products */,
+				9D2118EF4EA7949BC218BC03 /* Pods */,
+				37C2D5A53E2C7C28F8CB890A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +61,63 @@
 		11257C3420D0FB1100E8FA50 /* Immedia Places */ = {
 			isa = PBXGroup;
 			children = (
+				11257C4A20D0FC7200E8FA50 /* Model */,
 				11257C3520D0FB1100E8FA50 /* AppDelegate.swift */,
-				11257C3720D0FB1100E8FA50 /* ViewController.swift */,
-				11257C3920D0FB1100E8FA50 /* Main.storyboard */,
-				11257C3C20D0FB1300E8FA50 /* Assets.xcassets */,
-				11257C3E20D0FB1300E8FA50 /* LaunchScreen.storyboard */,
+				11257C4720D0FC5400E8FA50 /* Controller */,
+				11257C4820D0FC5E00E8FA50 /* Views */,
+				11257C4920D0FC6600E8FA50 /* Supporting Files */,
 				11257C4120D0FB1300E8FA50 /* Info.plist */,
 			);
 			path = "Immedia Places";
+			sourceTree = "<group>";
+		};
+		11257C4720D0FC5400E8FA50 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				11257C3720D0FB1100E8FA50 /* MapController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		11257C4820D0FC5E00E8FA50 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				11257C3920D0FB1100E8FA50 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		11257C4920D0FC6600E8FA50 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				11257C3C20D0FB1300E8FA50 /* Assets.xcassets */,
+				11257C3E20D0FB1300E8FA50 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		11257C4A20D0FC7200E8FA50 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		37C2D5A53E2C7C28F8CB890A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9D2118EF4EA7949BC218BC03 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				760069EC4C84AD2AB820D92F /* Pods-Immedia Places.debug.xcconfig */,
+				FD2654A058FA26DC4C1D88C1 /* Pods-Immedia Places.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +127,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11257C4420D0FB1300E8FA50 /* Build configuration list for PBXNativeTarget "Immedia Places" */;
 			buildPhases = (
+				A1EFB22D78D41DE4D676209D /* [CP] Check Pods Manifest.lock */,
 				11257C2E20D0FB1100E8FA50 /* Sources */,
 				11257C2F20D0FB1100E8FA50 /* Frameworks */,
 				11257C3020D0FB1100E8FA50 /* Resources */,
+				8D5EB2CD569E2B04474C4A40 /* [CP] Embed Pods Frameworks */,
+				DF7079BAE96E43B7FC019ED7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,12 +189,72 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8D5EB2CD569E2B04474C4A40 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/FoursquareAPIClient/FoursquareAPIClient.framework",
+				"${BUILT_PRODUCTS_DIR}/ProgressHUD/ProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoursquareAPIClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1EFB22D78D41DE4D676209D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Immedia Places-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF7079BAE96E43B7FC019ED7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		11257C2E20D0FB1100E8FA50 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11257C3820D0FB1100E8FA50 /* ViewController.swift in Sources */,
+				11257C3820D0FB1100E8FA50 /* MapController.swift in Sources */,
 				11257C3620D0FB1100E8FA50 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,15 +397,13 @@
 		};
 		11257C4520D0FB1300E8FA50 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 760069EC4C84AD2AB820D92F /* Pods-Immedia Places.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U6P83RU85U;
 				INFOPLIST_FILE = "Immedia Places/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.glucosedigital.Immedia-Places";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -296,15 +413,13 @@
 		};
 		11257C4620D0FB1300E8FA50 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD2654A058FA26DC4C1D88C1 /* Pods-Immedia Places.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U6P83RU85U;
 				INFOPLIST_FILE = "Immedia Places/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.glucosedigital.Immedia-Places";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
