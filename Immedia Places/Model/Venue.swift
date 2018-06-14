@@ -14,9 +14,9 @@ class Venue: NSObject, MKAnnotation {
     var locationName: String?
     var coordinate: CLLocationCoordinate2D
     var venueID: String?
-    var photos: [String]?
+    var photos: [VenuePhotos]?
     
-    init(title: String, locationName: String?, coordinate: CLLocationCoordinate2D, venueID: String?, photos: [String]?) {
+    init(title: String, locationName: String?, coordinate: CLLocationCoordinate2D, venueID: String?, photos: [VenuePhotos]?) {
         self.title = title
         self.locationName = locationName
         self.coordinate = coordinate
@@ -30,7 +30,7 @@ class Venue: NSObject, MKAnnotation {
         return locationName
     }
     
-    class func from(json: JSON, photoUrls: [String]) -> Venue? {
+    class func from(json: JSON, photoUrls: [VenuePhotos]) -> Venue? {
         var title: String
         if let jsonTitle = json["name"].string {
             title = jsonTitle
@@ -46,6 +46,20 @@ class Venue: NSObject, MKAnnotation {
         let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
         return Venue(title: title, locationName: locationName, coordinate: coordinate, venueID: venueID, photos: photoUrls)
+    }
+}
+
+class VenuePhotos {
+    var url: String
+    var createdAt: Int
+    var sourceName: String?
+    var sourceUrl: String?
+    
+    init(url: String, createdAt: Int, sourceName: String?, sourceUrl: String?) {
+        self.url = url
+        self.createdAt = createdAt
+        self.sourceName = sourceName
+        self.sourceUrl = sourceUrl
     }
 }
 

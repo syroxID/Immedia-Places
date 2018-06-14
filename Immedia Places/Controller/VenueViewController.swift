@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 import FoursquareAPIClient
 import ChameleonFramework
+import SwiftyJSON
 
 class VenueViewController: UIViewController {
     //MARK: - Outlets
@@ -17,11 +18,16 @@ class VenueViewController: UIViewController {
     @IBOutlet weak var venueNameLabel: UILabel!
     @IBOutlet weak var venueAddressLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var textView: UITextView!
+    
     
     //MARK: - Properties
     var venueTitle: String = ""
     var venueAddress: String?
     var venue: Venue?
+    
+    //Foursquare Credentials
+    let client = FoursquareAPIClient(clientId: "5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR", clientSecret: "LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +36,18 @@ class VenueViewController: UIViewController {
         
         venueNameLabel.text = venue.title
         venueAddressLabel.text = venue.subtitle ?? ""
+        textView.text = "Loading tips for venue..."
         
         collectionView.delegate = self
         collectionView.dataSource = self
         
         setMainImage()
+        getPhotoVenueMetaData()
     }
     
     func setMainImage() {
         if let imageString = venue!.photos?.first {
-            let url = URL(string: imageString)
+            let url = URL(string: imageString.url)
             bgImageView.kf.indicatorType = .activity
             bgImageView.kf.setImage(with: url)
         }
@@ -48,7 +56,39 @@ class VenueViewController: UIViewController {
     }
     
     func getPhotoVenueMetaData() {
-        
+        guard let venueId = venue?.venueID else { fatalError() }
+        client.request(path: "venues/\(venueId)/tips", parameter: [:]) { (result) in
+            
+            switch result {
+            case let .success(data):
+                do {
+                    let json = try JSON(data: data)
+                    DispatchQueue.main.async {
+                        self.textView.text = json["response"]["tips"]["text"].string ?? self.displayTextViewErrorText()
+                    }
+                } catch {
+                    print("Error parsing JSON")
+                    DispatchQueue.main.async {
+                        self.textView.text = self.displayTextViewErrorText()
+                    }
+                }
+                
+            case let .failure(error):
+                switch error {
+                case let .connectionError(connectionError):
+                    print(connectionError)
+                case let .apiError(apiError):
+                    print(apiError.errorType)
+                    print(apiError.errorDetail)
+                default:
+                    print("Error occured fetching venues, please try again later")
+                }
+            }
+        }
+    }
+    
+    func displayTextViewErrorText() -> String {
+        return "No tips are available for this venue"
     }
 }
 
@@ -65,7 +105,7 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageGalleryCVCell
         
         if let imageString = venue!.photos?[indexPath.row] {
-            let url = URL(string: imageString)
+            let url = URL(string: imageString.url)
             cell.imageView.kf.indicatorType = .activity
             cell.imageView.kf.setImage(with: url)
             
@@ -74,6 +114,8 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         return cell
     }
+    
+    
     
     @objc func zoomImage(_ sender: UITapGestureRecognizer) {
         let sender = sender.view as! UIImageView

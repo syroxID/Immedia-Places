@@ -71,8 +71,8 @@ class MapController: UIViewController {
         }
     }
     
-    func getVenueImageUrls(venueID: String, completion: @escaping ([String]) -> ()) {
-        var photosArray = [String]()
+    func getVenueImageUrls(venueID: String, completion: @escaping ([VenuePhotos]) -> ()) {
+        var photosArray = [VenuePhotos]()
         let path = "venues/\(venueID)/photos"
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
@@ -83,7 +83,11 @@ class MapController: UIViewController {
                     if let items = json["response"]["photos"]["items"].array {
                         for each in items {
                             let photoUrl = "\(each["prefix"])1024x1024\(each["suffix"])"
-                            photosArray.append(photoUrl)
+                            let createdAt = each["createdAt"].int
+                            let sourceName = each["source"]["name"].string
+                            let sourceUrl = each["source"]["url"].string
+                            let newPhoto = VenuePhotos(url: photoUrl, createdAt: createdAt ?? 0, sourceName: sourceName, sourceUrl: sourceUrl)
+                            photosArray.append(newPhoto)
                         }
                     }
                 }

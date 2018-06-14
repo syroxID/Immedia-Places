@@ -200,23 +200,23 @@
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.20784313725490197" green="0.11372549019607843" blue="0.20392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstItem="eWU-fk-f8M" firstAttribute="leading" secondItem="fDo-CH-kOk" secondAttribute="leading" constant="8" id="9IE-xv-DV6"/>
-                                                            <constraint firstItem="eWU-fk-f8M" firstAttribute="centerX" secondItem="fDo-CH-kOk" secondAttribute="centerX" id="ChY-x1-nSN"/>
-                                                            <constraint firstAttribute="trailing" secondItem="eWU-fk-f8M" secondAttribute="trailing" constant="8" id="EQF-va-8TY"/>
-                                                            <constraint firstItem="eWU-fk-f8M" firstAttribute="centerY" secondItem="fDo-CH-kOk" secondAttribute="centerY" id="KJd-ue-937"/>
+                                                            <constraint firstItem="eWU-fk-f8M" firstAttribute="leading" secondItem="fDo-CH-kOk" secondAttribute="leading" constant="8" id="4OP-Gj-4Op"/>
+                                                            <constraint firstAttribute="trailing" secondItem="eWU-fk-f8M" secondAttribute="trailing" constant="8" id="4Wu-U1-2pM"/>
+                                                            <constraint firstItem="eWU-fk-f8M" firstAttribute="centerX" secondItem="fDo-CH-kOk" secondAttribute="centerX" id="9Ef-7F-epX"/>
+                                                            <constraint firstItem="eWU-fk-f8M" firstAttribute="centerY" secondItem="fDo-CH-kOk" secondAttribute="centerY" id="wEg-7D-ofV"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="fDo-CH-kOk" firstAttribute="top" secondItem="jaf-QH-fWC" secondAttribute="bottom" id="0ou-G8-6k7"/>
-                                                    <constraint firstItem="jaf-QH-fWC" firstAttribute="top" secondItem="pjo-Pc-DDi" secondAttribute="top" id="0uc-cq-EDN"/>
-                                                    <constraint firstItem="jaf-QH-fWC" firstAttribute="leading" secondItem="pjo-Pc-DDi" secondAttribute="leading" id="5Vd-JA-Wjf"/>
-                                                    <constraint firstAttribute="trailing" secondItem="jaf-QH-fWC" secondAttribute="trailing" id="DZq-a8-CND"/>
-                                                    <constraint firstAttribute="trailing" secondItem="fDo-CH-kOk" secondAttribute="trailing" id="Wfg-OU-H3I"/>
-                                                    <constraint firstItem="fDo-CH-kOk" firstAttribute="leading" secondItem="pjo-Pc-DDi" secondAttribute="leading" id="cIs-aO-8TR"/>
-                                                    <constraint firstItem="jaf-QH-fWC" firstAttribute="height" secondItem="fDo-CH-kOk" secondAttribute="height" id="eZs-NW-FkD"/>
-                                                    <constraint firstAttribute="bottom" secondItem="fDo-CH-kOk" secondAttribute="bottom" id="kfg-4m-ngh"/>
+                                                    <constraint firstItem="fDo-CH-kOk" firstAttribute="leading" secondItem="pjo-Pc-DDi" secondAttribute="leading" id="4Gz-ZQ-zVd"/>
+                                                    <constraint firstAttribute="bottom" secondItem="fDo-CH-kOk" secondAttribute="bottom" id="AGn-eG-5Zk"/>
+                                                    <constraint firstItem="fDo-CH-kOk" firstAttribute="top" secondItem="jaf-QH-fWC" secondAttribute="bottom" id="Kzn-er-CEc"/>
+                                                    <constraint firstItem="jaf-QH-fWC" firstAttribute="top" secondItem="pjo-Pc-DDi" secondAttribute="top" id="L7m-hy-kSE"/>
+                                                    <constraint firstItem="jaf-QH-fWC" firstAttribute="height" secondItem="fDo-CH-kOk" secondAttribute="height" id="Yio-sp-GqN"/>
+                                                    <constraint firstItem="jaf-QH-fWC" firstAttribute="leading" secondItem="pjo-Pc-DDi" secondAttribute="leading" id="pjP-UN-Hs9"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fDo-CH-kOk" secondAttribute="trailing" id="qJ4-qM-jDj"/>
+                                                    <constraint firstAttribute="trailing" secondItem="jaf-QH-fWC" secondAttribute="trailing" id="udw-eo-RSo"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -255,6 +255,7 @@
                     <connections>
                         <outlet property="bgImageView" destination="C2V-XX-JfJ" id="DIG-bH-rWD"/>
                         <outlet property="collectionView" destination="jaf-QH-fWC" id="G3j-Dv-nvD"/>
+                        <outlet property="textView" destination="eWU-fk-f8M" id="x4u-EF-pex"/>
                         <outlet property="venueAddressLabel" destination="JeO-dA-ymT" id="CPu-nr-nFi"/>
                         <outlet property="venueNameLabel" destination="y7U-9b-2dh" id="v1D-kE-ep5"/>
                     </connections>
