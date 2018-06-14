@@ -98,50 +98,114 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return venue?.photos?.count ?? 1
+        if venue?.photos?.count == 0 {
+            return 1
+        } else {
+            return venue?.photos?.count ?? 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageGalleryCVCell
         
-        if let imageString = venue!.photos?[indexPath.row] {
-            let url = URL(string: imageString.url)
+        guard let photoArray = venue!.photos else { fatalError("Photo array not initialized") }
+    
+        if photoArray.count > 0 {
+            let url = URL(string: photoArray[indexPath.row].url)
             cell.imageView.kf.indicatorType = .activity
             cell.imageView.kf.setImage(with: url)
-            
+            cell.imageView.tag = indexPath.row
+            cell.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomImage(_:))))
+        } else {
+            cell.imageView.image = UIImage(named: "detail-bg")
+            cell.imageView.tag = 9999
             cell.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomImage(_:))))
         }
         
         return cell
     }
     
-    
-    
     @objc func zoomImage(_ sender: UITapGestureRecognizer) {
+        let startingFrame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
+        
         let sender = sender.view as! UIImageView
-        let newImageView = UIImageView(image: sender.image)
-        newImageView.frame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
-        newImageView.backgroundColor = UIColor.black
-        newImageView.contentMode = .scaleAspectFit
-        newImageView.isUserInteractionEnabled = true
+        let fullscreenView = FullscreenImage(frame: startingFrame, image: sender.image)
+        
         let dismissView = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage(_:)))
-        newImageView.addGestureRecognizer(dismissView)
-        self.view.addSubview(newImageView)
+        fullscreenView.addGestureRecognizer(dismissView)
+        
+        self.view.addSubview(fullscreenView)
+        
+        guard let verticalStackHeight = fullscreenView.verticalStackHeight else { fatalError() }
+        
+        
+        if sender.tag == 9999 {
+            fullscreenView.name.text = "This is an image from Pexels"
+            fullscreenView.url.text = "https://www.pexels.com"
+            fullscreenView.createdAt.text = "Not sure when the picture was taken"
+            
+        } else {
+            fullscreenView.name.text = venue?.photos?[sender.tag].sourceName
+            fullscreenView.url.text = venue?.photos?[sender.tag].sourceUrl
+            
+            let date = Date(timeIntervalSince1970: Double((venue?.photos?[sender.tag].createdAt)!))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MMM-YYYY, mm:hh"
+            fullscreenView.createdAt.text = dateFormatter.string(from: date)
+        }
+        
         self.navigationController?.isNavigationBarHidden = true
-
+        
         UIView.animate(withDuration: 0.5) {
-            newImageView.frame = UIScreen.main.bounds
+            fullscreenView.frame = UIScreen.main.bounds
+            fullscreenView.imageView.frame = CGRect(x: 0, y: 0, width: fullscreenView.frame.width, height: fullscreenView.frame.height * 0.75)
+            NSLayoutConstraint.deactivate([verticalStackHeight])
+            verticalStackHeight.constant = fullscreenView.frame.height * 0.25
+            NSLayoutConstraint.activate([verticalStackHeight])
+            self.view.layoutIfNeeded()
         }
     }
     
-    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
-        let imageView = sender.view as! UIImageView
+//    @objc func zoomImage(_ sender: UITapGestureRecognizer) {
+//        let sender = sender.view as! UIImageView
+//        let newImageView = UIImageView(image: sender.image)
+//        newImageView.frame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
+//        newImageView.backgroundColor = UIColor.black
+//        newImageView.contentMode = .scaleAspectFit
+//        newImageView.isUserInteractionEnabled = true
+//        let dismissView = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage(_:)))
+//        newImageView.addGestureRecognizer(dismissView)
+//        self.view.addSubview(newImageView)
+//        self.navigationController?.isNavigationBarHidden = true
+//
+//        UIView.animate(withDuration: 0.5) {
+//            newImageView.frame = UIScreen.main.bounds
+//        }
+//    }
     
+    @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
+//        let imageView = sender.view as! UIImageView
+//
+//        UIView.animate(withDuration: 0.5, animations: {
+//            imageView.frame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
+//            self.navigationController?.isNavigationBarHidden = false
+//        }) { (bool) in
+//            imageView.removeFromSuperview()
+//        }
+        let middlePoint = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
+        print(UIScreen.main.bounds)
+        print(middlePoint)
+        
+        let view = sender.view as! FullscreenImage
+        
         UIView.animate(withDuration: 0.5, animations: {
-            imageView.frame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
+            view.imageView.frame = middlePoint
+            view.frame = middlePoint
+            
+            self.view.layoutIfNeeded()
             self.navigationController?.isNavigationBarHidden = false
         }) { (bool) in
-            imageView.removeFromSuperview()
+            view.removeFromSuperview()
         }
     }
 }
