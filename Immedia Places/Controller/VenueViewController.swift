@@ -46,6 +46,10 @@ class VenueViewController: UIViewController {
         
         collectionView.backgroundColor = UIColor.flatPlumDark.darken(byPercentage: 0.08)
     }
+    
+    func getPhotoVenueMetaData() {
+        
+    }
 }
 
 extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSource {

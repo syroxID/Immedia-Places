@@ -29,6 +29,8 @@ class MapController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = appTitle
         mapView.delegate = self
+        mapView.showsCompass = true
+        mapView.showsScale = true
         
         checkLocationServiceAuthentication()
         
@@ -142,6 +144,10 @@ class MapController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
         }
+    }
+    
+    @IBAction func currentLocationPressed(_ sender: UIButton) {
+        mapView.setUserTrackingMode(.follow, animated: true)
     }
 }
 
