@@ -27,10 +27,9 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = appTitle
+        mapView.delegate = self
         
         checkLocationServiceAuthentication()
-        
-        mapView.delegate = self
     }
     
     private let regionRadius: CLLocationDistance = 1000
@@ -65,22 +64,70 @@ class MapController: UIViewController {
         }
     }
     
+    func getVenueImageUrls(venueID: String, completion: @escaping ([String]) -> ()) {
+        var photosArray = [String]()
+        let path = "venues/\(venueID)/photos"
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        client.request(path: path, parameter: [:]) { [weak self] result in
+            switch result {
+            case let .success(data):
+                if let json = try? JSON(data: data) {
+                    if let items = json["response"]["photos"]["items"].array {
+                        for each in items {
+                            let photoUrl = "\(each["prefix"])1024x1024\(each["suffix"])"
+                            photosArray.append(photoUrl)
+                        }
+                    }
+                }
+            case let .failure(error):
+                switch error {
+                case let .connectionError(connectionError):
+                    print(connectionError)
+                case let .apiError(apiError):
+                    print(apiError.errorType)
+                    print(apiError.errorDetail)
+                default:
+                    print("Error occured fetching image urls")
+                }
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(photosArray)
+        }
+    }
+    
     func createVenuesArray(fromData data: JSON?) {
         guard let json = data else { fatalError("Data did not pull through") }
+        let dispatchGroup = DispatchGroup()
         
         if let jsonVenues = json["response"]["venues"].array {
+            
             for venue in jsonVenues {
-                if let newVenue = Venue.from(json: venue) {
-                    self.venues.append(newVenue)
+                dispatchGroup.enter()
+                getVenueImageUrls(venueID: venue["id"].string!) { (array) in
+                    DispatchQueue.main.async {
+                        if let newVenue = Venue.from(json: venue, photoUrls: array) {
+                            self.venues.append(newVenue)
+                        } else {
+                            print("problem")
+                        }
+                    }
+                    dispatchGroup.leave()
                 }
             }
         }
         
-        mapView.addAnnotations(venues)
+        dispatchGroup.notify(queue: .main) {
+            self.mapView.addAnnotations(self.venues)
+        }
     }
     
     //MARK: - Current Location
     var locationManager = CLLocationManager()
+    var didFindLocation: Bool = false
     
     func checkLocationServiceAuthentication() {
         locationManager.delegate = self
@@ -96,9 +143,13 @@ class MapController: UIViewController {
 extension MapController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last!
-        self.mapView.showsUserLocation = true
-        zoomMapTo(location: location)
-        getVenues(aroundLocation: location)
+        if didFindLocation == false {
+            self.mapView.showsUserLocation = true
+            zoomMapTo(location: location)
+            getVenues(aroundLocation: location)
+            didFindLocation = true
+            locationManager.stopUpdatingLocation()
+        }
     }
 }
 
@@ -136,8 +187,6 @@ extension MapController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-
-//        venues.filter {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)}
         
         selectedVenueIndex = venues.index(where: {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)})
         

@@ -14,12 +14,14 @@ class Venue: NSObject, MKAnnotation {
     var locationName: String?
     var coordinate: CLLocationCoordinate2D
     var venueID: String?
+    var photos: [String]?
     
-    init(title: String, locationName: String?, coordinate: CLLocationCoordinate2D, venueID: String?) {
+    init(title: String, locationName: String?, coordinate: CLLocationCoordinate2D, venueID: String?, photos: [String]?) {
         self.title = title
         self.locationName = locationName
         self.coordinate = coordinate
         self.venueID = venueID
+        self.photos = photos
         
         super.init()
     }
@@ -28,7 +30,7 @@ class Venue: NSObject, MKAnnotation {
         return locationName
     }
     
-    class func from(json: JSON) -> Venue? {
+    class func from(json: JSON, photoUrls: [String]) -> Venue? {
         var title: String
         if let jsonTitle = json["name"].string {
             title = jsonTitle
@@ -43,7 +45,7 @@ class Venue: NSObject, MKAnnotation {
         
         let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
-        return Venue(title: title, locationName: locationName, coordinate: coordinate, venueID: venueID)
+        return Venue(title: title, locationName: locationName, coordinate: coordinate, venueID: venueID, photos: photoUrls)
     }
 }
 

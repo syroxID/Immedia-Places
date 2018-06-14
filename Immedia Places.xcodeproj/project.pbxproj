@@ -14,6 +14,7 @@
 		11257C4020D0FB1300E8FA50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11257C3E20D0FB1300E8FA50 /* LaunchScreen.storyboard */; };
 		11257C4C20D107C100E8FA50 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C4B20D107C100E8FA50 /* Venue.swift */; };
 		11257C4E20D1417D00E8FA50 /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C4D20D1417D00E8FA50 /* VenueViewController.swift */; };
+		11257C5020D1C97700E8FA50 /* ImageGalleryCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C4F20D1C97700E8FA50 /* ImageGalleryCVCell.swift */; };
 		C6664797C25781F55AB9955A /* Pods_Immedia_Places.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		11257C4120D0FB1300E8FA50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11257C4B20D107C100E8FA50 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 		11257C4D20D1417D00E8FA50 /* VenueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewController.swift; sourceTree = "<group>"; };
+		11257C4F20D1C97700E8FA50 /* ImageGalleryCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCVCell.swift; sourceTree = "<group>"; };
 		760069EC4C84AD2AB820D92F /* Pods-Immedia Places.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Immedia Places.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places.debug.xcconfig"; sourceTree = "<group>"; };
 		B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Immedia_Places.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2654A058FA26DC4C1D88C1 /* Pods-Immedia Places.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Immedia Places.release.xcconfig"; path = "Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places.release.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				11257C3920D0FB1100E8FA50 /* Main.storyboard */,
+				11257C4F20D1C97700E8FA50 /* ImageGalleryCVCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11257C5020D1C97700E8FA50 /* ImageGalleryCVCell.swift in Sources */,
 				11257C3820D0FB1100E8FA50 /* MapController.swift in Sources */,
 				11257C4C20D107C100E8FA50 /* Venue.swift in Sources */,
 				11257C4E20D1417D00E8FA50 /* VenueViewController.swift in Sources */,
@@ -413,7 +417,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U6P83RU85U;
 				INFOPLIST_FILE = "Immedia Places/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.glucosedigital.Immedia-Places";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -429,7 +436,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = U6P83RU85U;
 				INFOPLIST_FILE = "Immedia Places/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.glucosedigital.Immedia-Places";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
