@@ -43,6 +43,8 @@ class VenueViewController: UIViewController {
             bgImageView.kf.indicatorType = .activity
             bgImageView.kf.setImage(with: url)
         }
+        
+        collectionView.backgroundColor = UIColor.flatPlumDark.darken(byPercentage: 0.08)
     }
 }
 

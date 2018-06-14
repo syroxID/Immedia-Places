@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import FoursquareAPIClient
 import SwiftyJSON
+import ChameleonFramework
 
 class MapController: UIViewController {
     
@@ -30,6 +31,10 @@ class MapController: UIViewController {
         mapView.delegate = self
         
         checkLocationServiceAuthentication()
+        
+        navigationController?.navigationBar.barTintColor = UIColor.flatPlumDark.darken(byPercentage: 0.1)
+        navigationController?.navigationBar.tintColor = ContrastColorOf(UIColor.flatPlum, returnFlat: true)
+        
     }
     
     private let regionRadius: CLLocationDistance = 1000
