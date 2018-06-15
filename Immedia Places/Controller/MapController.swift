@@ -17,13 +17,16 @@ class MapController: UIViewController {
     //MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     
-    //Foursquare Credentials
+    //Foursquare Credentials and Default Parameters
     let client = FoursquareAPIClient(clientId: "5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR", clientSecret: "LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4")
+    var limit: Int = 5
+    var radius: Int = 100000
     
     //MARK: - Properties
     private let appTitle = "What's around me?"
     var venues = [Venue]()
     var selectedVenueIndex: Int?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +52,8 @@ class MapController: UIViewController {
     func getVenues(aroundLocation location: CLLocation) {
         let parameters: [String: String] = [
             "ll": "\(location.coordinate.latitude), \(location.coordinate.longitude)",
-            "limit": "5"]
+            "limit": "\(self.limit)",
+            "radius": "\(self.radius)"]
         
         client.request(path: "venues/search", parameter: parameters) { [weak self] result in
             
@@ -153,6 +157,49 @@ class MapController: UIViewController {
     @IBAction func currentLocationPressed(_ sender: UIButton) {
         mapView.setUserTrackingMode(.follow, animated: true)
     }
+    
+    //MARK: - Filter View
+    lazy var slideFilter: FilterView = {
+        let sf = FilterView()
+        sf.delegate = self
+//        sf.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissFilterView)))
+        return sf
+    }()
+    
+    @IBAction func filterPressed(_ sender: UIBarButtonItem) {
+        view.addSubview(slideFilter)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            self.slideFilter.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    @objc func dismissFilterView() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.slideFilter.frame = CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            self.view.layoutIfNeeded()
+//            self.slideFilter.removeFromSuperview()
+        }, completion: {(bool) in
+            self.slideFilter.removeFromSuperview()
+        })
+    }
+}
+
+extension MapController: returnSelectionsDelegate {
+    func passDataToController(radius: Int, venues: Int) {
+        self.limit = venues
+        self.radius = radius
+        self.didFindLocation = false
+        self.dismissFilterView()
+        self.mapView.removeAnnotations(self.venues)
+        self.venues.removeAll()
+        checkLocationServiceAuthentication()
+    }
+    
+    func dismissView() {
+         self.dismissFilterView()
+    }
 }
 
 extension MapController: CLLocationManagerDelegate {
@@ -206,9 +253,6 @@ extension MapController: MKMapViewDelegate {
         selectedVenueIndex = venues.index(where: {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)})
         
             performSegue(withIdentifier: "goToVenueDetail", sender: self)
-        
-        
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

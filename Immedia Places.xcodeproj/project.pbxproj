@@ -17,6 +17,7 @@
 		11257C5020D1C97700E8FA50 /* ImageGalleryCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11257C4F20D1C97700E8FA50 /* ImageGalleryCVCell.swift */; };
 		11DEB04920D3037600197279 /* FullscreenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DEB04820D3037600197279 /* FullscreenImage.swift */; };
 		11DEB04B20D3047600197279 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DEB04A20D3047600197279 /* Extension.swift */; };
+		11E027E120D3CCED00FBA0C7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E027E020D3CCED00FBA0C7 /* FilterView.swift */; };
 		C6664797C25781F55AB9955A /* Pods_Immedia_Places.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		11257C4F20D1C97700E8FA50 /* ImageGalleryCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryCVCell.swift; sourceTree = "<group>"; };
 		11DEB04820D3037600197279 /* FullscreenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImage.swift; sourceTree = "<group>"; };
 		11DEB04A20D3047600197279 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		11E027E020D3CCED00FBA0C7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		760069EC4C84AD2AB820D92F /* Pods-Immedia Places.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Immedia Places.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places.debug.xcconfig"; sourceTree = "<group>"; };
 		B2856D81C0359FF09A9BDC8F /* Pods_Immedia_Places.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Immedia_Places.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2654A058FA26DC4C1D88C1 /* Pods-Immedia Places.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Immedia Places.release.xcconfig"; path = "Pods/Target Support Files/Pods-Immedia Places/Pods-Immedia Places.release.xcconfig"; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				11257C3920D0FB1100E8FA50 /* Main.storyboard */,
 				11257C4F20D1C97700E8FA50 /* ImageGalleryCVCell.swift */,
 				11DEB04820D3037600197279 /* FullscreenImage.swift */,
+				11E027E020D3CCED00FBA0C7 /* FilterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				11257C5020D1C97700E8FA50 /* ImageGalleryCVCell.swift in Sources */,
 				11DEB04B20D3047600197279 /* Extension.swift in Sources */,
 				11257C3820D0FB1100E8FA50 /* MapController.swift in Sources */,
+				11E027E120D3CCED00FBA0C7 /* FilterView.swift in Sources */,
 				11257C4C20D107C100E8FA50 /* Venue.swift in Sources */,
 				11257C4E20D1417D00E8FA50 /* VenueViewController.swift in Sources */,
 				11257C3620D0FB1100E8FA50 /* AppDelegate.swift in Sources */,

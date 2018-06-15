@@ -10,6 +10,7 @@ import UIKit
 
 class FullscreenImage: UIView {
     //MARK: - Properties
+    var imageViewHeight: NSLayoutConstraint?
     var verticalStackHeight: NSLayoutConstraint?
     
     //MARK: - View Elements
@@ -65,6 +66,9 @@ class FullscreenImage: UIView {
         verticalStack.addArrangedSubview(name)
         verticalStack.addArrangedSubview(url)
         verticalStack.addArrangedSubview(createdAt)
+        
+        imageView.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: nil)
+        imageViewHeight = imageView.heightAnchor.constraint(equalToConstant: 0)
         
         verticalStack.anchorStraightToAnchors(top: nil, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor)
         verticalStackHeight = verticalStack.heightAnchor.constraint(equalToConstant: 0)

@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="laV-iM-nyL">
-                                <rect key="frame" x="328" y="22" width="25" height="25"/>
+                                <rect key="frame" x="334" y="51" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="2e8-5T-cUh"/>
                                     <constraint firstAttribute="height" constant="25" id="R9J-bE-9ar"/>
@@ -37,16 +37,21 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="APz-3X-TlV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="O2X-X5-LmQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="laV-iM-nyL" secondAttribute="trailing" constant="22" id="Pyc-kW-Gsb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="laV-iM-nyL" secondAttribute="trailing" constant="16" id="Pyc-kW-Gsb"/>
                             <constraint firstItem="APz-3X-TlV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="a3s-P8-Sys"/>
                             <constraint firstItem="APz-3X-TlV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bOP-Rp-Wx6"/>
-                            <constraint firstItem="laV-iM-nyL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="22" id="gMA-bC-wJM"/>
+                            <constraint firstItem="laV-iM-nyL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="51" id="gMA-bC-wJM"/>
                             <constraint firstItem="APz-3X-TlV" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="pK6-4U-KIO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="yLJ-B2-oFv">
                         <barButtonItem key="backBarButtonItem" title="Back" id="yf3-gC-peB"/>
+                        <barButtonItem key="rightBarButtonItem" title="Filter" image="slider" id="2ak-Ce-OOp">
+                            <connections>
+                                <action selector="filterPressed:" destination="BYZ-38-t0r" id="7AE-AU-r7V"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="APz-3X-TlV" id="50v-GG-vz9"/>
@@ -290,5 +295,6 @@
     <resources>
         <image name="detail-bg" width="960" height="639"/>
         <image name="direction-arrow" width="25" height="25"/>
+        <image name="slider" width="25" height="25"/>
     </resources>
 </document>
