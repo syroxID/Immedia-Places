@@ -66,6 +66,7 @@ class FilterView: UIView {
         s.maximumValue = 100000
         s.value = 100000
         s.tag = 1
+        s.tintColor = UIColor.flatPlumDark
         s.addTarget(self, action: #selector(updateLabel(_:)), for: .valueChanged)
         return s
     }()
@@ -84,6 +85,7 @@ class FilterView: UIView {
         s.maximumValue = 50
         s.value = 5
         s.tag = 2
+        s.tintColor = UIColor.flatPlumDark
         s.addTarget(self, action: #selector(updateLabel(_:)), for: .valueChanged)
         return s
     }()

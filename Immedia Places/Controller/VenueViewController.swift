@@ -140,7 +140,7 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         
         if sender.tag == 9999 {
-            fullscreenView.name.text = "This is an image from Pexels"
+            fullscreenView.name.text = "This is a default image from Pexels"
             fullscreenView.url.text = "https://www.pexels.com"
             fullscreenView.createdAt.text = "Not sure when the picture was taken"
             
@@ -156,14 +156,16 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         self.navigationController?.isNavigationBarHidden = true
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5, animations: {
             fullscreenView.frame = UIScreen.main.bounds
-            
-            NSLayoutConstraint.deactivate([imageViewHeight ,verticalStackHeight])
-            imageViewHeight.constant = fullscreenView.frame.height * 0.75
-            verticalStackHeight.constant = fullscreenView.frame.height * 0.25
-            NSLayoutConstraint.activate([imageViewHeight ,verticalStackHeight])
-            self.view.layoutIfNeeded()
+        }) { (bool) in
+            UIView.animate(withDuration: 0.5, animations: {
+                NSLayoutConstraint.deactivate([imageViewHeight ,verticalStackHeight])
+                imageViewHeight.constant = fullscreenView.frame.height * 0.75
+                verticalStackHeight.constant = fullscreenView.frame.height * 0.25
+                NSLayoutConstraint.activate([imageViewHeight ,verticalStackHeight])
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
@@ -171,8 +173,10 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let middlePoint = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
         
         let view = sender.view as! FullscreenImage
+        guard let imageViewHeight = view.imageViewHeight, let verticalStackHeight = view.verticalStackHeight else { fatalError() }
         
         UIView.animate(withDuration: 0.5, animations: {
+            NSLayoutConstraint.deactivate([imageViewHeight, verticalStackHeight])
             view.frame = middlePoint
             self.view.layoutIfNeeded()
             self.navigationController?.isNavigationBarHidden = false

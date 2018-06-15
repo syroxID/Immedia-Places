@@ -67,11 +67,11 @@ class FullscreenImage: UIView {
         verticalStack.addArrangedSubview(url)
         verticalStack.addArrangedSubview(createdAt)
         
-        imageView.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: nil)
-        imageViewHeight = imageView.heightAnchor.constraint(equalToConstant: 0)
-        
         verticalStack.anchorStraightToAnchors(top: nil, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor)
         verticalStackHeight = verticalStack.heightAnchor.constraint(equalToConstant: 0)
+        
+        imageView.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: verticalStack.topAnchor)
+        imageViewHeight = imageView.heightAnchor.constraint(equalToConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

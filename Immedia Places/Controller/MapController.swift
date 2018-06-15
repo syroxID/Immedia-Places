@@ -12,20 +12,34 @@ import FoursquareAPIClient
 import SwiftyJSON
 import ChameleonFramework
 
+//The order of funcs -> viewDidLoad calls CheckLocationServiceAuthentication which will return the users current GPS location. Once the location is obtained the method will call the mapview delegate update method. The didUpdateMethod will call getVenues after venues are returned, Foursquare requires the a separate call for photos and photo metadata.
+
 class MapController: UIViewController {
     
-    //MARK: - Outlets
+//MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     
     //Foursquare Credentials and Default Parameters
     let client = FoursquareAPIClient(clientId: "5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR", clientSecret: "LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4")
+    
+    //Adjust default Foursquare parameters here
+    //Limit: is the number venues to be return from Foursquare API
+    //Radius: in meters from your current locations
     var limit: Int = 5
     var radius: Int = 100000
     
-    //MARK: - Properties
+//MARK: - Properties
     private let appTitle = "What's around me?"
+    
+    //The array of all venues returned from Foursquare
     var venues = [Venue]()
     var selectedVenueIndex: Int?
+    
+    private let regionRadius: CLLocationDistance = 1000
+    
+//MARK: - Current Location
+    var locationManager = CLLocationManager()
+    var didFindLocation: Bool = false
     
 
     override func viewDidLoad() {
@@ -41,8 +55,6 @@ class MapController: UIViewController {
         navigationController?.navigationBar.tintColor = ContrastColorOf(UIColor.flatPlum, returnFlat: true)
         
     }
-    
-    private let regionRadius: CLLocationDistance = 1000
     
     func zoomMapTo(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
@@ -140,10 +152,6 @@ class MapController: UIViewController {
         }
     }
     
-    //MARK: - Current Location
-    var locationManager = CLLocationManager()
-    var didFindLocation: Bool = false
-    
     func checkLocationServiceAuthentication() {
         locationManager.delegate = self
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -162,7 +170,6 @@ class MapController: UIViewController {
     lazy var slideFilter: FilterView = {
         let sf = FilterView()
         sf.delegate = self
-//        sf.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissFilterView)))
         return sf
     }()
     
@@ -179,7 +186,6 @@ class MapController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.slideFilter.frame = CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             self.view.layoutIfNeeded()
-//            self.slideFilter.removeFromSuperview()
         }, completion: {(bool) in
             self.slideFilter.removeFromSuperview()
         })
@@ -216,7 +222,6 @@ extension MapController: CLLocationManagerDelegate {
 }
 
 extension MapController: MKMapViewDelegate {
-    //Would like to add image to the pin
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? Venue {
             let identifier = "pin"
@@ -224,13 +229,11 @@ extension MapController: MKMapViewDelegate {
             
             if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
                 view = dequeuedView
-//                view.image = UIImage(named: "chat")
             } else {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
                 view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
-//                view.image = UIImage(named: "chat")
             }
             view.animatesDrop = true
             return view
