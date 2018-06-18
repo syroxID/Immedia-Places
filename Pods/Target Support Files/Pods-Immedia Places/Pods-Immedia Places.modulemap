@@ -1,0 +1,6 @@
+framework module Pods_Immedia_Places {
+  umbrella header "Pods-Immedia Places-umbrella.h"
+
+  export *
+  module * { export * }
+}

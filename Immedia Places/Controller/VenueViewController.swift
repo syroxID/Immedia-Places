@@ -27,7 +27,7 @@ class VenueViewController: UIViewController {
     var venue: Venue?
     
     //Foursquare Credentials
-    let client = FoursquareAPIClient(clientId: "5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR", clientSecret: "LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4")
+    let client = FoursquareAPIClient(clientId: "ADD_YOUR_CLIENT_ID", clientSecret: "ADD_YOUR_CLIENT_SECRET")
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -1,0 +1,35 @@
+PODS:
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
+  - FoursquareAPIClient (4.0.1)
+  - Kingfisher (4.8.0)
+  - ProgressHUD (2.51)
+  - SwiftyJSON (4.1.0)
+
+DEPENDENCIES:
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - FoursquareAPIClient (~> 4.0)
+  - Kingfisher (~> 4.0)
+  - ProgressHUD
+  - SwiftyJSON
+
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: 6dd284bde21ea2e7f9fd89bc36f40df16e16369d
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+SPEC CHECKSUMS:
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  FoursquareAPIClient: 12fbe6aa7b11485ee8314c7590458b6baa226f4e
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  ProgressHUD: 54b4c2fa202bf3da7dddc1c698ae4e6376333bd9
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+
+PODFILE CHECKSUM: e13528d491a532d55c56afb1873dbe1c4f8f0881
+
+COCOAPODS: 1.4.0
