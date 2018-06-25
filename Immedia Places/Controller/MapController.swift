@@ -11,6 +11,7 @@ import MapKit
 import FoursquareAPIClient
 import SwiftyJSON
 import ChameleonFramework
+import Kingfisher
 
 //The order of funcs -> viewDidLoad calls CheckLocationServiceAuthentication which will return the users current GPS location. Once the location is obtained the method will call the mapview delegate update method. The didUpdateMethod will call getVenues after venues are returned, Foursquare requires the a separate call for photos and photo metadata.
 
@@ -18,9 +19,12 @@ class MapController: UIViewController {
     
 //MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
+    let annotationImage = UIImageView()
     
     //Foursquare Credentials and Default Parameters
-    let client = FoursquareAPIClient(clientId: "ADD_YOUR_CLIENT_ID", clientSecret: "ADD_YOUR_CLIENT_SECRET")
+    //CLIENT_ID 5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR
+    //CLIENT_SECRET LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4
+    let client = FoursquareAPIClient(clientId: "CLIENT_ID", clientSecret: "CLIENT_SECRET")
     
     //Adjust default Foursquare parameters here
     //Limit: is the number venues to be return from Foursquare API
@@ -54,6 +58,7 @@ class MapController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.flatPlumDark.darken(byPercentage: 0.1)
         navigationController?.navigationBar.tintColor = ContrastColorOf(UIColor.flatPlum, returnFlat: true)
         
+        slideFilter.delegate = self
     }
     
     func zoomMapTo(location: CLLocation) {
@@ -167,14 +172,15 @@ class MapController: UIViewController {
     }
     
     //MARK: - Filter View
-    lazy var slideFilter: FilterView = {
+    let slideFilter: FilterView = {
         let sf = FilterView()
-        sf.delegate = self
+        sf.frame = CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: 0)
         return sf
     }()
     
     @IBAction func filterPressed(_ sender: UIBarButtonItem) {
         view.addSubview(slideFilter)
+        print(UIScreen.main.bounds.width)
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.slideFilter.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -232,19 +238,31 @@ extension MapController: CLLocationManagerDelegate {
 
 extension MapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
         if let annotation = annotation as? Venue {
             let identifier = "pin"
             var view: MKPinAnnotationView
+            // var view: MKAnnotationView
             
             if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
                 view = dequeuedView
+                view.annotation = annotation
             } else {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//                view = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
                 view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
             }
             view.animatesDrop = true
+//            let image = UIImage(named: "chat")
+        
+//            view.image = image
+//            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.height, height: view.frame.height))
+            annotationImage.frame = CGRect(x: 0, y: 0, width: view.frame.height, height: view.frame.height)
+//            annotationImage.image = UIImage(named: "detail-bg")
+            annotationImage.contentMode = .scaleAspectFit
+            view.leftCalloutAccessoryView = annotationImage
             return view
         }
         
@@ -253,6 +271,14 @@ extension MapController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else { fatalError() }
+        selectedVenueIndex = venues.index(where: {($0.coordinate.latitude == annotation.coordinate.latitude) && ($0.coordinate.longitude == annotation.coordinate.longitude)})
+        annotationImage.kf.indicatorType = .activity
+        if let firstImageUrl = venues[selectedVenueIndex!].photos?.first?.url {
+            let imageUrl = URL(string: firstImageUrl)
+            annotationImage.kf.setImage(with: imageUrl)
+        } else {
+            annotationImage.image = UIImage(named: "detail-bg")
+        }
         navigationItem.title = annotation.title!
     }
     
@@ -262,7 +288,7 @@ extension MapController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        selectedVenueIndex = venues.index(where: {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)})
+//        selectedVenueIndex = venues.index(where: {($0.coordinate.latitude == view.annotation?.coordinate.latitude) && ($0.coordinate.longitude == view.annotation?.coordinate.longitude)})
         
             performSegue(withIdentifier: "goToVenueDetail", sender: self)
     }

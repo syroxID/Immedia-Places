@@ -91,8 +91,7 @@ class FilterView: UIView {
     }()
 
     override init(frame: CGRect) {
-        print(UIScreen.main.bounds.width)
-        super.init(frame: CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        super.init(frame: frame)
         self.backgroundColor = UIColor(white: 0, alpha: 0.8)
         
         setupWindow()
@@ -109,6 +108,8 @@ class FilterView: UIView {
         verticalStack.addArrangedSubview(numberOfVenuesSlider)
         
         cancelBtn.anchorWithConstantsToTop(top: nil, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor, topConstant: 0, leftConstant: leadingTrailingSpace, rightConstant: -(leadingTrailingSpace), bottomConstant: -74)
+//        cancelBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        cancelBtn.widthAnchor.constraint(equalToConstant: self.frame.width - (leadingTrailingSpace * 2.0)).isActive = true
         cancelBtn.heightAnchor.constraint(equalTo: heightAnchor, multiplier: buttonHeightMultiplier).isActive = true
         
         applyBtn.anchorWithConstantsToTop(top: nil, left: leftAnchor, right: rightAnchor, bottom: cancelBtn.topAnchor, topConstant: 0, leftConstant: leadingTrailingSpace, rightConstant: -(leadingTrailingSpace), bottomConstant: -6)
