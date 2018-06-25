@@ -21,6 +21,7 @@ class MapController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     let annotationImage = UIImageView()
     
+    //Add Credentials
     //Foursquare Credentials and Default Parameters
     let client = FoursquareAPIClient(clientId: "CLIENT_ID", clientSecret: "CLIENT_SECRET")
     

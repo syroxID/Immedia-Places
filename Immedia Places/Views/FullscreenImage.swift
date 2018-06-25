@@ -8,6 +8,8 @@
 
 import UIKit
 
+//Not best practice to have UIView as a delegate, best would be to contain a VC
+
 class FullscreenImage: UIView, UIScrollViewDelegate {
     //MARK: - Properties
     var imageViewHeight: NSLayoutConstraint?
