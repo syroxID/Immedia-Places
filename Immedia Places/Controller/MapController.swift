@@ -22,8 +22,6 @@ class MapController: UIViewController {
     let annotationImage = UIImageView()
     
     //Foursquare Credentials and Default Parameters
-    //CLIENT_ID 5XO1ASTKSJ0ETUBVEG3THP0F42JIBV2WNJ3RDWC3GWOPLMUR
-    //CLIENT_SECRET LKTYVS3LQLHDXXOPJNHVCWITAP4FEKGS211AY5KG1SC3H1H4
     let client = FoursquareAPIClient(clientId: "CLIENT_ID", clientSecret: "CLIENT_SECRET")
     
     //Adjust default Foursquare parameters here
@@ -59,6 +57,7 @@ class MapController: UIViewController {
         navigationController?.navigationBar.tintColor = ContrastColorOf(UIColor.flatPlum, returnFlat: true)
         
         slideFilter.delegate = self
+//        view.addSubview(slideFilter)
     }
     
     func zoomMapTo(location: CLLocation) {
@@ -180,8 +179,10 @@ class MapController: UIViewController {
     
     @IBAction func filterPressed(_ sender: UIBarButtonItem) {
         view.addSubview(slideFilter)
-        print(UIScreen.main.bounds.width)
-        
+        perform(#selector(performSlideOut), with: nil, afterDelay: 0.01)
+    }
+    
+    @objc func performSlideOut() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.slideFilter.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             self.view.layoutIfNeeded()

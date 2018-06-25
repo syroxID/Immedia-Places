@@ -73,10 +73,6 @@ class FullscreenImage: UIView, UIScrollViewDelegate {
         
         addSubview(scrollview)
         scrollview.addSubview(imageView)
-//        scrollview.addSubview(verticalStack)
-//        verticalStack.addArrangedSubview(name)
-//        verticalStack.addArrangedSubview(url)
-//        verticalStack.addArrangedSubview(createdAt)
         
         scrollview.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor)
         scrollview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true

@@ -21,11 +21,10 @@ class FilterView: UIView {
     let cornerRadius: CGFloat = 10
     
     //MARK: - View Elements
-    let cancelBtn: UIButton = {
+    lazy var cancelBtn: UIButton = {
         let b = UIButton(type: .system)
         b.setTitle("Cancel", for: .normal)
         b.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        
         b.backgroundColor = .white
         return b
     }()
@@ -41,6 +40,7 @@ class FilterView: UIView {
     let elementWindow: UIView = {
         let v = UIView()
         v.backgroundColor = .white
+        v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
@@ -94,6 +94,10 @@ class FilterView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor(white: 0, alpha: 0.8)
         
+//        setupWindow()
+    }
+    
+    override func layoutSubviews() {
         setupWindow()
     }
     
@@ -107,19 +111,24 @@ class FilterView: UIView {
         verticalStack.addArrangedSubview(numberOfVenuesLabel)
         verticalStack.addArrangedSubview(numberOfVenuesSlider)
         
-        cancelBtn.anchorWithConstantsToTop(top: nil, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor, topConstant: 0, leftConstant: leadingTrailingSpace, rightConstant: -(leadingTrailingSpace), bottomConstant: -74)
-//        cancelBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-//        cancelBtn.widthAnchor.constraint(equalToConstant: self.frame.width - (leadingTrailingSpace * 2.0)).isActive = true
+        cancelBtn.anchorWithConstantsToTop(top: nil, left: nil, right: nil, bottom: bottomAnchor, topConstant: 0, leftConstant: 0, rightConstant: 0, bottomConstant: -74)
+        cancelBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        cancelBtn.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - (leadingTrailingSpace * 2.0)).isActive = true
         cancelBtn.heightAnchor.constraint(equalTo: heightAnchor, multiplier: buttonHeightMultiplier).isActive = true
         
         applyBtn.anchorWithConstantsToTop(top: nil, left: leftAnchor, right: rightAnchor, bottom: cancelBtn.topAnchor, topConstant: 0, leftConstant: leadingTrailingSpace, rightConstant: -(leadingTrailingSpace), bottomConstant: -6)
+        applyBtn.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        applyBtn.widthAnchor.constraint(equalToConstant: self.frame.width - (leadingTrailingSpace * 2.0)).isActive = true
         applyBtn.heightAnchor.constraint(equalTo: heightAnchor, multiplier: buttonHeightMultiplier).isActive = true
-        
-        elementWindow.anchorWithConstantsToTop(top: nil, left: leftAnchor, right: rightAnchor, bottom: applyBtn.topAnchor, topConstant: 0, leftConstant: leadingTrailingSpace, rightConstant: -(leadingTrailingSpace), bottomConstant: -12)
+
+        elementWindow.anchorWithConstantsToTop(top: nil, left: nil, right: nil, bottom: applyBtn.topAnchor, topConstant: 0, leftConstant: 0, rightConstant: 0, bottomConstant: -12)
+        elementWindow.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        elementWindow.widthAnchor.constraint(equalToConstant: self.frame.width - (leadingTrailingSpace * 2.0)).isActive = true
         elementWindow.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3).isActive = true
-        
-        verticalStack.anchorWithConstantsToTop(top: elementWindow.topAnchor, left: elementWindow.leftAnchor, right: elementWindow.rightAnchor, bottom: elementWindow.bottomAnchor, topConstant: 12, leftConstant: 12, rightConstant: -12, bottomConstant: -12)
-        
+
+        verticalStack.anchorWithConstantsToTop(top: elementWindow.topAnchor, left: elementWindow.leftAnchor, right: elementWindow.rightAnchor, bottom: nil, topConstant: 0, leftConstant: 12, rightConstant: -12, bottomConstant: 0)
+        verticalStack.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.3).isActive = true
+
         elementWindow.layer.cornerRadius = self.cornerRadius
         cancelBtn.addTarget(self, action: #selector(dismissBtnPressed), for: .touchUpInside)
         applyBtn.addTarget(self, action: #selector(applyBtnPressed), for: .touchUpInside)
