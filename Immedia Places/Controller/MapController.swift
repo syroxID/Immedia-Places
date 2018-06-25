@@ -216,8 +216,17 @@ extension MapController: CLLocationManagerDelegate {
             zoomMapTo(location: location)
             getVenues(aroundLocation: location)
             didFindLocation = true
+            addTestVenue(location: location)
             locationManager.stopUpdatingLocation()
         }
+    }
+    
+    //MARK: - Test func to insert pin without foursquare request
+    func addTestVenue(location: CLLocation) {
+        let cllocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let testVenue = Venue(title: "Test", locationName: "Test", coordinate: cllocation, venueID: "Test location", photos: [])
+        venues.append(testVenue)
+        self.mapView.addAnnotations(venues)
     }
 }
 

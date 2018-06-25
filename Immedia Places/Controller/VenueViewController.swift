@@ -134,9 +134,16 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let dismissView = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage(_:)))
         fullscreenView.addGestureRecognizer(dismissView)
         
+//        fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
         self.view.addSubview(fullscreenView)
         
-        guard let verticalStackHeight = fullscreenView.verticalStackHeight, let imageViewHeight = fullscreenView.imageViewHeight else { fatalError() }
+//        UIView.animate(withDuration: 0.3/1.5, animations: {
+//            fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
+//        }) { (bool) in
+//            //maybe do something further
+//        }
+        
+        guard let verticalStackHeight = fullscreenView.verticalStackHeight, let imageViewHeight = fullscreenView.imageViewHeight, let imageViewWidth = fullscreenView.imageViewWidth else { fatalError() }
         
         
         if sender.tag == 9999 {
@@ -160,13 +167,16 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
             fullscreenView.frame = UIScreen.main.bounds
         }) { (bool) in
             UIView.animate(withDuration: 0.5, animations: {
-                NSLayoutConstraint.deactivate([imageViewHeight ,verticalStackHeight])
+                NSLayoutConstraint.deactivate([imageViewHeight, imageViewWidth, verticalStackHeight])
+                imageViewWidth.constant = fullscreenView.frame.width
                 imageViewHeight.constant = fullscreenView.frame.height * 0.75
                 verticalStackHeight.constant = fullscreenView.frame.height * 0.25
-                NSLayoutConstraint.activate([imageViewHeight ,verticalStackHeight])
+                NSLayoutConstraint.activate([imageViewHeight, imageViewWidth, verticalStackHeight])
                 self.view.layoutIfNeeded()
             })
         }
+        
+        
     }
     
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {

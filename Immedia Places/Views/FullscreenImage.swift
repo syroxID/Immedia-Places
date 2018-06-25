@@ -11,12 +11,15 @@ import UIKit
 class FullscreenImage: UIView {
     //MARK: - Properties
     var imageViewHeight: NSLayoutConstraint?
+    var imageViewWidth: NSLayoutConstraint?
     var verticalStackHeight: NSLayoutConstraint?
     
     //MARK: - View Elements
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         return iv
     }()
     
@@ -56,7 +59,7 @@ class FullscreenImage: UIView {
 
     init(frame: CGRect, image: UIImage?) {
         super.init(frame: frame)
-        self.imageView.image = image
+//        self.imageView.image = image
         
         self.backgroundColor = UIColor.black
         self.isUserInteractionEnabled = true
@@ -70,6 +73,16 @@ class FullscreenImage: UIView {
         verticalStack.anchorStraightToAnchors(top: nil, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor)
         verticalStackHeight = verticalStack.heightAnchor.constraint(equalToConstant: 0)
         
+        imageView.anchorStraightToAnchors(top: topAnchor, left: nil, right: nil, bottom: verticalStack.topAnchor)
+        imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        imageViewWidth = imageView.widthAnchor.constraint(equalToConstant: 0)
+        imageViewHeight = imageView.heightAnchor.constraint(equalToConstant: 0)
+        
+        self.imageView.image = image
+    }
+    
+    func addImageView() {
+        addSubview(imageView)
         imageView.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: verticalStack.topAnchor)
         imageViewHeight = imageView.heightAnchor.constraint(equalToConstant: 0)
     }
