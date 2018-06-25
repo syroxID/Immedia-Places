@@ -82,8 +82,6 @@ class FullscreenImage: UIView, UIScrollViewDelegate {
         scrollview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         
         addVerticalStack()
-//        verticalStack.anchorStraightToAnchors(top: nil, left: scrollview.leftAnchor, right: scrollview.rightAnchor, bottom: scrollview.bottomAnchor)
-//        verticalStackHeight = verticalStack.heightAnchor.constraint(equalToConstant: 0)
         
         imageView.anchorStraightToAnchors(top: scrollview.topAnchor, left: nil, right: nil, bottom: verticalStack.topAnchor)
         imageView.widthAnchor.constraint(equalTo: scrollview.widthAnchor).isActive = true
