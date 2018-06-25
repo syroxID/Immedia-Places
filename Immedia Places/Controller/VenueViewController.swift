@@ -137,11 +137,7 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
         self.view.addSubview(fullscreenView)
         
-        UIView.animate(withDuration: 0.5, animations: {
-            fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
-        }) { (bool) in
-            //maybe do something further
-        }
+        
         
         if sender.tag == 9999 {
             fullscreenView.name.text = "This is a default image from Pexels"
@@ -158,7 +154,16 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
             fullscreenView.createdAt.text = dateFormatter.string(from: date)
         }
         
-        self.navigationController?.isNavigationBarHidden = true
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.navigationController?.isNavigationBarHidden = true
+        }) { (bool) in
+            UIView.animate(withDuration: 0.5, animations: {
+                fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
+            }) { (bool) in
+                //maybe do something further
+            }
+        }
     }
     
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {

@@ -8,13 +8,15 @@
 
 import UIKit
 
-class FullscreenImage: UIView {
+class FullscreenImage: UIView, UIScrollViewDelegate {
     //MARK: - Properties
     var imageViewHeight: NSLayoutConstraint?
     var imageViewWidth: NSLayoutConstraint?
     var verticalStackHeight: NSLayoutConstraint?
     
     //MARK: - View Elements
+    let scrollview = UIScrollView()
+    
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
@@ -60,26 +62,54 @@ class FullscreenImage: UIView {
     init(frame: CGRect, image: UIImage?) {
         super.init(frame: frame)
         self.imageView.image = image
+        scrollview.delegate = self
+        
+        scrollview.minimumZoomScale = 1.0
+        scrollview.maximumZoomScale = 10.0
+        scrollview.zoomScale = 1.0
         
         self.backgroundColor = UIColor.black
         self.isUserInteractionEnabled = true
         
-        addSubview(imageView)
-        addSubview(verticalStack)
+        addSubview(scrollview)
+        scrollview.addSubview(imageView)
+//        scrollview.addSubview(verticalStack)
+//        verticalStack.addArrangedSubview(name)
+//        verticalStack.addArrangedSubview(url)
+//        verticalStack.addArrangedSubview(createdAt)
+        
+        scrollview.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor)
+        scrollview.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        
+        addVerticalStack()
+//        verticalStack.anchorStraightToAnchors(top: nil, left: scrollview.leftAnchor, right: scrollview.rightAnchor, bottom: scrollview.bottomAnchor)
+//        verticalStackHeight = verticalStack.heightAnchor.constraint(equalToConstant: 0)
+        
+        imageView.anchorStraightToAnchors(top: scrollview.topAnchor, left: nil, right: nil, bottom: verticalStack.topAnchor)
+        imageView.widthAnchor.constraint(equalTo: scrollview.widthAnchor).isActive = true
+    }
+    
+    func addVerticalStack() {
+        scrollview.addSubview(verticalStack)
         verticalStack.addArrangedSubview(name)
         verticalStack.addArrangedSubview(url)
         verticalStack.addArrangedSubview(createdAt)
-        
-        verticalStack.anchorStraightToAnchors(top: nil, left: leftAnchor, right: rightAnchor, bottom: bottomAnchor)
-        verticalStackHeight = verticalStack.heightAnchor.constraint(equalToConstant: 0)
-        
-        imageView.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: verticalStack.topAnchor)
+        verticalStack.anchorStraightToAnchors(top: nil, left: scrollview.leftAnchor, right: scrollview.rightAnchor, bottom: scrollview.bottomAnchor)
     }
     
-    func addImageView() {
-        addSubview(imageView)
-        imageView.anchorStraightToAnchors(top: topAnchor, left: leftAnchor, right: rightAnchor, bottom: verticalStack.topAnchor)
-        imageViewHeight = imageView.heightAnchor.constraint(equalToConstant: 0)
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        verticalStack.removeFromSuperview()
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        if scale == 1.0 {
+            scrollView.addSubview(verticalStack)
+            verticalStack.anchorStraightToAnchors(top: imageView.bottomAnchor, left: scrollView.leftAnchor, right: scrollView.rightAnchor, bottom: scrollView.bottomAnchor)
+        }
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
     
     required init?(coder aDecoder: NSCoder) {
