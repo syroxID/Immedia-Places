@@ -91,6 +91,7 @@ class FilterView: UIView {
     }()
 
     override init(frame: CGRect) {
+        print(UIScreen.main.bounds.width)
         super.init(frame: CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         self.backgroundColor = UIColor(white: 0, alpha: 0.8)
         

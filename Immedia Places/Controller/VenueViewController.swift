@@ -126,7 +126,7 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     @objc func zoomImage(_ sender: UITapGestureRecognizer) {
-        let startingFrame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
+        let startingFrame = UIScreen.main.bounds
         
         let sender = sender.view as! UIImageView
         let fullscreenView = FullscreenImage(frame: startingFrame, image: sender.image)
@@ -134,17 +134,14 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let dismissView = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage(_:)))
         fullscreenView.addGestureRecognizer(dismissView)
         
-//        fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+        fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
         self.view.addSubview(fullscreenView)
         
-//        UIView.animate(withDuration: 0.3/1.5, animations: {
-//            fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
-//        }) { (bool) in
-//            //maybe do something further
-//        }
-        
-        guard let verticalStackHeight = fullscreenView.verticalStackHeight, let imageViewHeight = fullscreenView.imageViewHeight, let imageViewWidth = fullscreenView.imageViewWidth else { fatalError() }
-        
+        UIView.animate(withDuration: 0.5, animations: {
+            fullscreenView.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
+        }) { (bool) in
+            //maybe do something further
+        }
         
         if sender.tag == 9999 {
             fullscreenView.name.text = "This is a default image from Pexels"
@@ -162,36 +159,17 @@ extension VenueViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
         
         self.navigationController?.isNavigationBarHidden = true
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            fullscreenView.frame = UIScreen.main.bounds
-        }) { (bool) in
-            UIView.animate(withDuration: 0.5, animations: {
-                NSLayoutConstraint.deactivate([imageViewHeight, imageViewWidth, verticalStackHeight])
-                imageViewWidth.constant = fullscreenView.frame.width
-                imageViewHeight.constant = fullscreenView.frame.height * 0.75
-                verticalStackHeight.constant = fullscreenView.frame.height * 0.25
-                NSLayoutConstraint.activate([imageViewHeight, imageViewWidth, verticalStackHeight])
-                self.view.layoutIfNeeded()
-            })
-        }
-        
-        
     }
     
     @objc func dismissFullscreenImage(_ sender: UITapGestureRecognizer) {
-        let middlePoint = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height / 2, width: 0, height: 0)
         
         let view = sender.view as! FullscreenImage
-        guard let imageViewHeight = view.imageViewHeight, let verticalStackHeight = view.verticalStackHeight else { fatalError() }
         
         UIView.animate(withDuration: 0.5, animations: {
-            NSLayoutConstraint.deactivate([imageViewHeight, verticalStackHeight])
-            view.frame = middlePoint
-            self.view.layoutIfNeeded()
+            view.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
             self.navigationController?.isNavigationBarHidden = false
         }) { (bool) in
-            view.removeFromSuperview()
+            //Maybe do something
         }
     }
 }
